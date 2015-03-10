@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     rpcalc.cpp
 
 OTHER_FILES += \
-    rpcalc.y
+    rpcalc.y \
+    calc.y
 
 HEADERS += \
     rpcalc.hpp
