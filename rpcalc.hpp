@@ -47,33 +47,33 @@ extern int yydebug;
       know about them.  */
    enum yytokentype {
      NUM = 258,
-     NEG = 259
+     VAR = 259,
+     FNCT = 260,
+     NEG = 261
    };
 #endif
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+{
+/* Line 2058 of yacc.c  */
+#line 9 "C:\\Projects\\CHECK\\mfcalc.y"
+
+double     val;  /* Чтобы возвращать числа.                     */
+symrec  *tptr;   /* Чтобы возвращать указатели таблицы символов */
+
+
+/* Line 2058 of yacc.c  */
+#line 69 "C:\\Projects\\CHECK\\rpcalc.hpp"
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-} YYLTYPE;
-# define yyltype YYLTYPE /* obsolescent; will be withdrawn */
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
-#endif
-
 extern YYSTYPE yylval;
-extern YYLTYPE yylloc;
+
 #ifdef YYPARSE_PARAM
 #if defined __STDC__ || defined __cplusplus
 int yyparse (void *YYPARSE_PARAM);
