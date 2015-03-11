@@ -23,7 +23,8 @@ input:    /* пустая строка */
 ;
 
 line:     '\n'
-        | exp '\n'  { printf ("\t%.10g\n", $1); }
+        | exp '\n'   { printf ("\t%.10g\n", $1); }
+        | error '\n' { yyerrok;                  }
 ;
 
 exp:      NUM                { $$ = $1;         }
