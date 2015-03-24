@@ -482,8 +482,9 @@ char *macsintext;
 #line 1 "C:\\Projects\\CHECK\\macsin.l"
 #line 2 "C:\\Projects\\CHECK\\macsin.l"
 #include <stdio.h>
+#include "macsin.tab.h"
 
-#line 487 "lex.macsin.c"
+#line 488 "lex.macsin.c"
 
 #define INITIAL 0
 #define comment 1
@@ -666,9 +667,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 15 "C:\\Projects\\CHECK\\macsin.l"
+#line 16 "C:\\Projects\\CHECK\\macsin.l"
 
-#line 672 "lex.macsin.c"
+#line 673 "lex.macsin.c"
 
 	if ( !(yy_init) )
 		{
@@ -753,46 +754,46 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "C:\\Projects\\CHECK\\macsin.l"
-printf("NUM ");
+#line 17 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atoi(macsintext); printf("NUM "); return NUM;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "C:\\Projects\\CHECK\\macsin.l"
-printf("NUM5 ");
+#line 18 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atoi(macsintext); printf("NUM5 "); return NUM5;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "C:\\Projects\\CHECK\\macsin.l"
-printf("FLOAT ");
+#line 19 "C:\\Projects\\CHECK\\macsin.l"
+printf("FLOAT "); return FLOAT;
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 19 "C:\\Projects\\CHECK\\macsin.l"
+#line 20 "C:\\Projects\\CHECK\\macsin.l"
 printf("\n");
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "C:\\Projects\\CHECK\\macsin.l"
+#line 21 "C:\\Projects\\CHECK\\macsin.l"
 /**/;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(comment):
-#line 21 "C:\\Projects\\CHECK\\macsin.l"
+#line 22 "C:\\Projects\\CHECK\\macsin.l"
 yyterminate();
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 22 "C:\\Projects\\CHECK\\macsin.l"
+#line 23 "C:\\Projects\\CHECK\\macsin.l"
 /**/;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "C:\\Projects\\CHECK\\macsin.l"
+#line 24 "C:\\Projects\\CHECK\\macsin.l"
 ECHO;
 	YY_BREAK
-#line 796 "lex.macsin.c"
+#line 797 "lex.macsin.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1784,7 +1785,7 @@ void macsinfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 22 "C:\\Projects\\CHECK\\macsin.l"
+#line 23 "C:\\Projects\\CHECK\\macsin.l"
 
 
 

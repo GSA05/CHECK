@@ -1,10 +1,10 @@
 #include <QCoreApplication>
-#include "calc.h"
-#include "rpcalc.hpp"
+//#include "macsin.tab.h"
 #include <clocale>
 
 extern FILE *macsinin;
-extern "C" int macsinlex(void);
+//extern "C" int macsinlex(void);
+extern "C" int macsinparse();
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     else {
         macsinin = stdin;
     }
-    macsinlex();
+    macsinparse();
 
     return a.exec();
 }

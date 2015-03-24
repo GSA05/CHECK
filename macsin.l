@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include "macsin.tab.h"
 %}
 
 %option noyywrap
@@ -13,9 +14,9 @@ comment	    [[:space:]][^{int3}{int5}{float12}]+$
 %x comment
 
 %%
-{int3}      printf("NUM ");
-{int5}      printf("NUM5 ");
-{float12}   printf("FLOAT ");
+{int3}      macsinlval = atoi(yytext); printf("NUM "); return NUM;
+{int5}      macsinlval = atoi(yytext); printf("NUM5 "); return NUM5;
+{float12}   printf("FLOAT "); return FLOAT;
 \n          printf("\n");
 [ \t]+      /**/;
 <<EOF>>     yyterminate();

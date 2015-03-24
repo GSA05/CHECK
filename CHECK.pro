@@ -16,16 +16,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    rpcalc.cpp \
-    lex.macsin.c
+    lex.macsin.c \
+    macsin.tab.c
 
 OTHER_FILES += \
-    rpcalc.y \
-    calc.y \
-    ltcalc.y \
-    mfcalc.y \
-    macsin.l
+    macsin.l \
+    macsin.y
 
 HEADERS += \
-    rpcalc.hpp \
-    calc.h
+    macsin.tab.h
