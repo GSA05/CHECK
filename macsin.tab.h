@@ -48,7 +48,13 @@ extern int macsindebug;
    enum yytokentype {
      NUM = 258,
      NUM5 = 259,
-     FLOAT = 260
+     FLOAT = 260,
+     RECORD1 = 261,
+     RECORD2 = 262,
+     RECORD3 = 263,
+     RECORD4 = 264,
+     RECORD5 = 265,
+     RECORD6_11 = 266
    };
 #endif
 
