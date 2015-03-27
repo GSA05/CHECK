@@ -15,7 +15,7 @@ int macsinwrap()
 
 %name-prefix "macsin"
 
-%token NUM NUM5 FLOAT RECORD1 RECORD2 RECORD3 RECORD4 RECORD5 RECORD6_11
+%token NUM NUM5 FLOAT RECORD1 RECORD2 RECORD3 RECORD4 RECORD5 RECORD6_11 MATERIALS MATERIAL ISOTOPES CONCENTRATIONS MODELS ISOTOPES_T CONCENTRATIONS_T TEMPERATURE GROUPS
 
 %%
 records: /* */
@@ -27,9 +27,6 @@ record: record1
         | record4
         | record5
         | record6-11
-        /* | NUM { printf("%d\n",$1); }
-        | NUM5 { printf("%d\n",$1); }
-        | FLOAT { printf("%g\n",$1); } */
         ;
 record1: RECORD1
          | record1 NUM
@@ -46,6 +43,29 @@ record4: RECORD4 { printf("record3\n"); }
 record5: RECORD5 { printf("record4\n"); }
          | record5 NUM
          ;
-record6-11: RECORD6_11 { printf("record5\n"); }
+material: MATERIAL
+          | material NUM
+          ;
+isotopes: ISOTOPES { printf("material\n"); }
+          | isotopes NUM5
+          ;
+concentrations: CONCENTRATIONS { printf("isotopes\n"); }
+                | concentrations FLOAT
+                ;
+models: MODELS { printf("concentrations\n"); }
+        | models NUM
+        ;
+isotopes_t: ISOTOPES_T { printf("models\n"); }
+            | isotopes NUM5
+            ;
+concentrations_t: CONCENTRATIONS_T { printf("isotopes_t\n"); }
+                  | concentrations_t FLOAT
+                  ;
+temperature: TEMPERATURE { if(1) printf("models\n"); else printf("concentrations_t"); }
+             | temperature FLOAT
+             ;
+record6-11: MATERIALS { printf("record5\n"); }
+            | record6-11 material isotopes concentrations models isotopes_t concentrations_t temperature
+            | record6-11 material isotopes concentrations models temperature
             ;
 %%

@@ -54,7 +54,16 @@ extern int macsindebug;
      RECORD3 = 263,
      RECORD4 = 264,
      RECORD5 = 265,
-     RECORD6_11 = 266
+     RECORD6_11 = 266,
+     MATERIALS = 267,
+     MATERIAL = 268,
+     ISOTOPES = 269,
+     CONCENTRATIONS = 270,
+     MODELS = 271,
+     ISOTOPES_T = 272,
+     CONCENTRATIONS_T = 273,
+     TEMPERATURE = 274,
+     GROUPS = 275
    };
 #endif
 
