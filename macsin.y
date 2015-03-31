@@ -56,16 +56,18 @@ models: MODELS { printf("concentrations\n"); }
         | models NUM
         ;
 isotopes_t: ISOTOPES_T { printf("models\n"); }
-            | isotopes NUM5
+            | isotopes_t NUM5
             ;
 concentrations_t: CONCENTRATIONS_T { printf("isotopes_t\n"); }
                   | concentrations_t FLOAT
                   ;
-temperature: TEMPERATURE { if(1) printf("models\n"); else printf("concentrations_t"); }
+temperature: TEMPERATURE { if(1) printf("models\n"); else printf("concentrations_t\n"); }
              | temperature FLOAT
              ;
+groups: GROUPS { printf("temperature\n"); }
+        | groups NUM;
 record6-11: MATERIALS { printf("record5\n"); }
-            | record6-11 material isotopes concentrations models isotopes_t concentrations_t temperature
-            | record6-11 material isotopes concentrations models temperature
+            | record6-11 material isotopes concentrations models isotopes_t concentrations_t temperature groups { printf("groups\n"); }
+            | record6-11 material isotopes concentrations models temperature groups { printf("groups\n"); }
             ;
 %%

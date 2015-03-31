@@ -69,6 +69,13 @@ comment	    [[:space:]][^{int3}{int5}{float12}]+$
 }
 <temperature>{
     {float12}       macsinlval = atof(yytext); printf("FLOAT "); return FLOAT;
-    "\n"            BEGIN(groups); return GROUPS;
+    "\n"            i = 0; BEGIN(groups); return GROUPS;
 }
+<groups>{
+    {int3}          macsinlval = atoi(yytext); printf("NUM "); return NUM;
+    "\n"            if(++i == nums[0]) { i = 0; BEGIN(material); return MATERIAL; }
+}
+<<EOF>>             yyterminate(); return 0;
+<*>.|"\n"
+
 %%
