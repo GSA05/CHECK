@@ -77,16 +77,19 @@
 
 void macsinerror(const char *str)
 {
-        fprintf(stderr,"Error: %s\n",str);
+    fprintf(stderr,"Error: %s\n",str);
 }
 
 int macsinwrap()
 {
-        return 1;
+    //BEGIN(INITIAL);
+    return 0;
 }
 
+int d = 1;
+
 /* Line 371 of yacc.c  */
-#line 90 "macsin.tab.c"
+#line 93 "macsin.tab.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -172,7 +175,7 @@ int macsinparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 176 "macsin.tab.c"
+#line 179 "macsin.tab.c"
 
 #ifdef short
 # undef short
@@ -473,10 +476,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    21,    21,    22,    24,    25,    26,    27,    28,    29,
-      31,    32,    34,    35,    37,    38,    40,    41,    43,    44,
-      46,    47,    49,    50,    52,    53,    55,    56,    58,    59,
-      61,    62,    64,    65,    67,    68,    69,    70,    71
+       0,    24,    24,    25,    27,    28,    29,    30,    31,    32,
+      34,    35,    37,    38,    40,    41,    43,    44,    46,    47,
+      49,    50,    52,    53,    55,    56,    58,    59,    61,    62,
+      64,    65,    67,    68,    70,    71,    72,    73,    74
 };
 #endif
 
@@ -1398,91 +1401,91 @@ yyreduce:
     {
         case 12:
 /* Line 1792 of yacc.c  */
-#line 34 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("record1\n"); }
+#line 37 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("record1\n"); } }
     break;
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 37 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("record2\n"); }
+#line 40 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("record2\n"); } }
     break;
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 40 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("record3\n"); }
+#line 43 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("record3\n"); } }
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 43 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("record4\n"); }
+#line 46 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("record4\n"); } }
     break;
 
   case 22:
 /* Line 1792 of yacc.c  */
-#line 49 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("material\n"); }
+#line 52 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("material\n"); } }
     break;
 
   case 24:
 /* Line 1792 of yacc.c  */
-#line 52 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("isotopes\n"); }
+#line 55 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("isotopes\n"); } }
     break;
 
   case 26:
 /* Line 1792 of yacc.c  */
-#line 55 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("concentrations\n"); }
+#line 58 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("concentrations\n"); } }
     break;
 
   case 28:
 /* Line 1792 of yacc.c  */
-#line 58 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("models\n"); }
+#line 61 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("models\n"); } }
     break;
 
   case 30:
 /* Line 1792 of yacc.c  */
-#line 61 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("isotopes_t\n"); }
+#line 64 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("isotopes_t\n"); } }
     break;
 
   case 32:
 /* Line 1792 of yacc.c  */
-#line 64 "C:\\Projects\\CHECK\\macsin.y"
-    { if(1) printf("models\n"); else printf("concentrations_t\n"); }
+#line 67 "C:\\Projects\\CHECK\\macsin.y"
+    { if(1) if (d) { printf("models\n"); } else if (d) { printf("concentrations_t\n"); } }
     break;
 
   case 34:
 /* Line 1792 of yacc.c  */
-#line 67 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("temperature\n"); }
+#line 70 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("temperature\n"); } }
     break;
 
   case 36:
 /* Line 1792 of yacc.c  */
-#line 69 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("record5\n"); }
+#line 72 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("record5\n"); } }
     break;
 
   case 37:
 /* Line 1792 of yacc.c  */
-#line 70 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("groups\n"); }
+#line 73 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("groups\n"); } }
     break;
 
   case 38:
 /* Line 1792 of yacc.c  */
-#line 71 "C:\\Projects\\CHECK\\macsin.y"
-    { printf("groups\n"); }
+#line 74 "C:\\Projects\\CHECK\\macsin.y"
+    { if (d) { printf("groups\n"); } }
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1486 "macsin.tab.c"
+#line 1489 "macsin.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1714,5 +1717,5 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 73 "C:\\Projects\\CHECK\\macsin.y"
+#line 76 "C:\\Projects\\CHECK\\macsin.y"
 

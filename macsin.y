@@ -4,13 +4,16 @@
 
 void macsinerror(const char *str)
 {
-        fprintf(stderr,"Error: %s\n",str);
+    fprintf(stderr,"Error: %s\n",str);
 }
 
 int macsinwrap()
 {
-        return 1;
+    //BEGIN(INITIAL);
+    return 0;
 }
+
+int d = 1;
 %}
 
 %name-prefix "macsin"
@@ -31,43 +34,43 @@ record: record1
 record1: RECORD1
          | record1 NUM
          ;
-record2: RECORD2 { printf("record1\n"); }
+record2: RECORD2 { if (d) { printf("record1\n"); } }
          | record2 FLOAT
          ;
-record3: RECORD3 { printf("record2\n"); }
+record3: RECORD3 { if (d) { printf("record2\n"); } }
          | record3 FLOAT
          ;
-record4: RECORD4 { printf("record3\n"); }
+record4: RECORD4 { if (d) { printf("record3\n"); } }
          | record4 NUM
          ;
-record5: RECORD5 { printf("record4\n"); }
+record5: RECORD5 { if (d) { printf("record4\n"); } }
          | record5 NUM
          ;
 material: MATERIAL
           | material NUM
           ;
-isotopes: ISOTOPES { printf("material\n"); }
+isotopes: ISOTOPES { if (d) { printf("material\n"); } }
           | isotopes NUM5
           ;
-concentrations: CONCENTRATIONS { printf("isotopes\n"); }
+concentrations: CONCENTRATIONS { if (d) { printf("isotopes\n"); } }
                 | concentrations FLOAT
                 ;
-models: MODELS { printf("concentrations\n"); }
+models: MODELS { if (d) { printf("concentrations\n"); } }
         | models NUM
         ;
-isotopes_t: ISOTOPES_T { printf("models\n"); }
+isotopes_t: ISOTOPES_T { if (d) { printf("models\n"); } }
             | isotopes_t NUM5
             ;
-concentrations_t: CONCENTRATIONS_T { printf("isotopes_t\n"); }
+concentrations_t: CONCENTRATIONS_T { if (d) { printf("isotopes_t\n"); } }
                   | concentrations_t FLOAT
                   ;
-temperature: TEMPERATURE { if(1) printf("models\n"); else printf("concentrations_t\n"); }
+temperature: TEMPERATURE { if(1) if (d) { printf("models\n"); } else if (d) { printf("concentrations_t\n"); } }
              | temperature FLOAT
              ;
-groups: GROUPS { printf("temperature\n"); }
+groups: GROUPS { if (d) { printf("temperature\n"); } }
         | groups NUM;
-record6-11: MATERIALS { printf("record5\n"); }
-            | record6-11 material isotopes concentrations models isotopes_t concentrations_t temperature groups { printf("groups\n"); }
-            | record6-11 material isotopes concentrations models temperature groups { printf("groups\n"); }
+record6-11: MATERIALS { if (d) { printf("record5\n"); } }
+            | record6-11 material isotopes concentrations models isotopes_t concentrations_t temperature groups { if (d) { printf("groups\n"); } }
+            | record6-11 material isotopes concentrations models temperature groups { if (d) { printf("groups\n"); } }
             ;
 %%

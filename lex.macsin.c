@@ -351,9 +351,6 @@ void macsinfree (void *  );
 
 /* Begin user sect3 */
 
-#define macsinwrap() 1
-#define YY_SKIP_YYWRAP
-
 typedef unsigned char YY_CHAR;
 
 FILE *macsinin = (FILE *) 0, *macsinout = (FILE *) 0;
@@ -547,7 +544,9 @@ char *macsintext;
 #include <stdio.h>
 #include "macsin.tab.h"
 
-#line 551 "lex.macsin.c"
+extern int d;
+
+#line 550 "lex.macsin.c"
 
 #define INITIAL 0
 #define row1 1
@@ -744,16 +743,12 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 16 "C:\\Projects\\CHECK\\macsin.l"
+#line 17 "C:\\Projects\\CHECK\\macsin.l"
 
-                    int line_num = 1;
-                    int line_num_prev = 0;
                     static int i = 0;
                     int j = 0;
                     static int nums[2];
-                    int num_group;
-                    int mat = -1;
-#line 757 "lex.macsin.c"
+#line 752 "lex.macsin.c"
 
 	if ( !(yy_init) )
 		{
@@ -838,180 +833,180 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 24 "C:\\Projects\\CHECK\\macsin.l"
+#line 21 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(row1); return RECORD1;
 	YY_BREAK
 
 case 2:
 YY_RULE_SETUP
-#line 26 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM "); return NUM;
+#line 23 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atoi(macsintext); if (d) printf("NUM "); return NUM;
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 27 "C:\\Projects\\CHECK\\macsin.l"
+#line 24 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(row2); return RECORD2;
 	YY_BREAK
 
 
 case 4:
 YY_RULE_SETUP
-#line 30 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atof(macsintext); printf("FLOAT "); return FLOAT;
+#line 27 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atof(macsintext); if (d) printf("FLOAT "); return FLOAT;
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 31 "C:\\Projects\\CHECK\\macsin.l"
+#line 28 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(row3); return RECORD3;
 	YY_BREAK
 
 
 case 6:
 YY_RULE_SETUP
-#line 34 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atof(macsintext); printf("FLOAT "); return FLOAT;
+#line 31 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atof(macsintext); if (d) printf("FLOAT "); return FLOAT;
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 35 "C:\\Projects\\CHECK\\macsin.l"
+#line 32 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(row4); return RECORD4;
 	YY_BREAK
 
 
 case 8:
 YY_RULE_SETUP
-#line 38 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM "); return NUM;
+#line 35 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atoi(macsintext); if (d) printf("NUM "); return NUM;
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 39 "C:\\Projects\\CHECK\\macsin.l"
+#line 36 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(row5); return RECORD5;
 	YY_BREAK
 
 
 case 10:
 YY_RULE_SETUP
-#line 42 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM "); return NUM;
+#line 39 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atoi(macsintext); if (d) printf("NUM "); return NUM;
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 43 "C:\\Projects\\CHECK\\macsin.l"
+#line 40 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(materials); return MATERIALS;
 	YY_BREAK
 
 case 12:
 YY_RULE_SETUP
-#line 45 "C:\\Projects\\CHECK\\macsin.l"
+#line 42 "C:\\Projects\\CHECK\\macsin.l"
 BEGIN(material); return MATERIAL;
 	YY_BREAK
 
 case 13:
 YY_RULE_SETUP
-#line 47 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = nums[i] = atoi(macsintext); printf("NUM "); if(++i == 2) BEGIN(comment); return NUM;
+#line 44 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = nums[i] = atoi(macsintext); if (d) printf("NUM "); if(++i == 2) BEGIN(comment); return NUM;
 	YY_BREAK
 
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 49 "C:\\Projects\\CHECK\\macsin.l"
+#line 46 "C:\\Projects\\CHECK\\macsin.l"
 i = 0; BEGIN(isotopes); return ISOTOPES;
 	YY_BREAK
 
 case 15:
 YY_RULE_SETUP
-#line 51 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM5 "); return NUM5;
+#line 48 "C:\\Projects\\CHECK\\macsin.l"
+i++; macsinlval = atoi(macsintext); if (d) printf("NUM5 "); return NUM5;
 	YY_BREAK
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 52 "C:\\Projects\\CHECK\\macsin.l"
-BEGIN(concentrations); return CONCENTRATIONS;
+#line 49 "C:\\Projects\\CHECK\\macsin.l"
+if(i >= nums[0]) { i = 0; BEGIN(concentrations); return CONCENTRATIONS; }
 	YY_BREAK
 
 
 case 17:
 YY_RULE_SETUP
-#line 55 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atof(macsintext); printf("FLOAT "); return FLOAT;
+#line 52 "C:\\Projects\\CHECK\\macsin.l"
+i++; macsinlval = atof(macsintext); if (d) printf("FLOAT "); return FLOAT;
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 56 "C:\\Projects\\CHECK\\macsin.l"
-BEGIN(models); return MODELS;
+#line 53 "C:\\Projects\\CHECK\\macsin.l"
+if(i >= nums[0]) { i = 0; BEGIN(models); return MODELS; }
 	YY_BREAK
 
 
 case 19:
 YY_RULE_SETUP
-#line 59 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM "); return NUM;
+#line 56 "C:\\Projects\\CHECK\\macsin.l"
+i++; macsinlval = atoi(macsintext); if (d) printf("NUM "); return NUM;
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 60 "C:\\Projects\\CHECK\\macsin.l"
-if(nums[1]) { BEGIN(isotopes_t); return ISOTOPES_T; } else { BEGIN(temperature); return TEMPERATURE; }
+#line 57 "C:\\Projects\\CHECK\\macsin.l"
+if(i >= nums[0]) { i = 0; if(nums[1]) { BEGIN(isotopes_t); return ISOTOPES_T; } else { BEGIN(temperature); return TEMPERATURE; } }
 	YY_BREAK
 
 
 case 21:
 YY_RULE_SETUP
-#line 63 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM5 "); return NUM5;
+#line 60 "C:\\Projects\\CHECK\\macsin.l"
+i++; macsinlval = atoi(macsintext); if (d) printf("NUM5 "); return NUM5;
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 64 "C:\\Projects\\CHECK\\macsin.l"
-BEGIN(concentrations_t); return CONCENTRATIONS_T;
+#line 61 "C:\\Projects\\CHECK\\macsin.l"
+if(i >= nums[1]) { i = 0; BEGIN(concentrations_t); return CONCENTRATIONS_T; }
 	YY_BREAK
 
 
 case 23:
 YY_RULE_SETUP
-#line 67 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atof(macsintext); printf("FLOAT "); return FLOAT;
+#line 64 "C:\\Projects\\CHECK\\macsin.l"
+i++; macsinlval = atof(macsintext); if (d) printf("FLOAT "); return FLOAT;
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 68 "C:\\Projects\\CHECK\\macsin.l"
-BEGIN(temperature); return TEMPERATURE;
+#line 65 "C:\\Projects\\CHECK\\macsin.l"
+if(i >= nums[1]) { i = 0; BEGIN(temperature); return TEMPERATURE; }
 	YY_BREAK
 
 
 case 25:
 YY_RULE_SETUP
-#line 71 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atof(macsintext); printf("FLOAT "); return FLOAT;
+#line 68 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atof(macsintext); if (d) printf("FLOAT "); return FLOAT;
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 72 "C:\\Projects\\CHECK\\macsin.l"
+#line 69 "C:\\Projects\\CHECK\\macsin.l"
 i = 0; BEGIN(groups); return GROUPS;
 	YY_BREAK
 
 
 case 27:
 YY_RULE_SETUP
-#line 75 "C:\\Projects\\CHECK\\macsin.l"
-macsinlval = atoi(macsintext); printf("NUM "); return NUM;
+#line 72 "C:\\Projects\\CHECK\\macsin.l"
+macsinlval = atoi(macsintext); if (d) printf("NUM "); return NUM;
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 76 "C:\\Projects\\CHECK\\macsin.l"
+#line 73 "C:\\Projects\\CHECK\\macsin.l"
 if(++i == nums[0]) { i = 0; BEGIN(material); return MATERIAL; }
 	YY_BREAK
 
@@ -1031,21 +1026,21 @@ case YY_STATE_EOF(isotopes_t):
 case YY_STATE_EOF(concentrations_t):
 case YY_STATE_EOF(temperature):
 case YY_STATE_EOF(groups):
-#line 78 "C:\\Projects\\CHECK\\macsin.l"
+#line 75 "C:\\Projects\\CHECK\\macsin.l"
 yyterminate(); return 0;
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 79 "C:\\Projects\\CHECK\\macsin.l"
+#line 76 "C:\\Projects\\CHECK\\macsin.l"
 
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 81 "C:\\Projects\\CHECK\\macsin.l"
+#line 78 "C:\\Projects\\CHECK\\macsin.l"
 ECHO;
 	YY_BREAK
-#line 1049 "lex.macsin.c"
+#line 1044 "lex.macsin.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2037,7 +2032,7 @@ void macsinfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 80 "C:\\Projects\\CHECK\\macsin.l"
+#line 77 "C:\\Projects\\CHECK\\macsin.l"
 
 
 
