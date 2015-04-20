@@ -63,7 +63,8 @@ extern int macsindebug;
      ISOTOPES_T = 272,
      CONCENTRATIONS_T = 273,
      TEMPERATURE = 274,
-     GROUPS = 275
+     GROUPS = 275,
+     BAD = 276
    };
 #endif
 

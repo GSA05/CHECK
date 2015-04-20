@@ -73,6 +73,7 @@ comment	    [[:space:]][^{int3}{int5}{float12}]+$
     "\n"            if(++i == nums[0]) { i = 0; BEGIN(material); return MATERIAL; }
 }
 <<EOF>>             yyterminate(); return 0;
-<*>.|"\n"
+<*>[ \t\r\n]
+<*>.                return BAD;
 
 %%
