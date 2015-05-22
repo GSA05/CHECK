@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "macsin.tab.h"
+#include "main.h"
 
 extern int d;
 %}

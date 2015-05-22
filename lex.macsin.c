@@ -544,7 +544,7 @@ char *macsintext;
 #line 1 "C:\\Projects\\CHECK\\macsin.l"
 #line 2 "C:\\Projects\\CHECK\\macsin.l"
 #include <stdio.h>
-#include "macsin.tab.h"
+#include "main.h"
 
 extern int d;
 

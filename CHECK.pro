@@ -24,4 +24,5 @@ OTHER_FILES += \
     macsin.y
 
 HEADERS += \
-    macsin.tab.h
+    macsin.tab.h \
+    main.h

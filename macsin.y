@@ -36,7 +36,7 @@ record: record1
 record1: RECORD1
          | record1 NUM
          ;
-record2: RECORD2 { if (d) { printf("record1\n"); } }
+record2: RECORD2 { if (d) { printf("record1 %d\n",@1.first_column); } }
          | record2 FLOAT
          ;
 record3: RECORD3 { if (d) { printf("record2\n"); } }
