@@ -37,65 +37,64 @@ blank   [ \t]
     loc.step ();
 %}
     static int i = 0;
-    int j = 0;
     static int nums[2];
 {blank}         loc.step (); BEGIN(row1); return macsin::macsin_parser::make_RECORD1(loc);
 <row1>{
-{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+{int3}          if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 "\n"            BEGIN(row2); return macsin::macsin_parser::make_RECORD2(loc);
 }
 <row2>{
-{float12}       macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+{float12}       if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(atof(yytext),loc);
 "\n"            BEGIN(row3); return macsin::macsin_parser::make_RECORD3(loc);
 }
 <row3>{
-{float12}       macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+{float12}       if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(atof(yytext),loc);
 "\n"            BEGIN(row4); return macsin::macsin_parser::make_RECORD4(loc);
 }
 <row4>{
-{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+{int3}          if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 "\n"            BEGIN(row5); return macsin::macsin_parser::make_RECORD5(loc);
 }
 <row5>{
-{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+{int3}          if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 "\n"            BEGIN(materials); return macsin::macsin_parser::make_MATERIALS(loc);
 }
 <materials>{blank}    BEGIN(material); return macsin::macsin_parser::make_MATERIAL(loc);
 <material>{
-{int3}          macsinlval = nums[i] = atoi(yytext); if (d) printf("NUM "); if(++i == 2) BEGIN(comment); return macsin::macsin_parser::make_NUM(loc);
+{int3}          nums[i] = atoi(yytext); if (d) printf("NUM "); if(++i == 2) BEGIN(comment); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 }
 <comment>.*"\n"     i = 0; BEGIN(isotopes); return macsin::macsin_parser::make_ISOTOPES(loc);
 <isotopes>{
-{int5}          i++; macsinlval = atoi(yytext); if (d) printf("NUM5 "); return macsin::macsin_parser::make_NUM5(loc);
+{int5}          i++; if (d) printf("NUM5 "); return macsin::macsin_parser::make_NUM5(atoi(yytext),loc);
 "\n"            if(i >= nums[0]) { i = 0; BEGIN(concentrations); return macsin::macsin_parser::make_CONCENTRATIONS(loc); }
 }
 <concentrations>{
-{float12}       i++; macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+{float12}       i++; if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(atof(yytext),loc);
 "\n"            if(i >= nums[0]) { i = 0; BEGIN(models); return macsin::macsin_parser::make_MODELS(loc); }
 }
 <models>{
-{int3}          i++; macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+{int3}          i++; if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 "\n"            if(i >= nums[0]) { i = 0; if(nums[1]) { BEGIN(isotopes_t); return macsin::macsin_parser::make_ISOTOPES_T(loc); } else { BEGIN(temperature); return macsin::macsin_parser::make_TEMPERATURE(loc); } }
 }
 <isotopes_t>{
-{int5}          i++; macsinlval = atoi(yytext); if (d) printf("NUM5 "); return macsin::macsin_parser::make_NUM5(loc);
+{int5}          i++; if (d) printf("NUM5 "); return macsin::macsin_parser::make_NUM5(atoi(yytext),loc);
 "\n"            if(i >= nums[1]) { i = 0; BEGIN(concentrations_t); return macsin::macsin_parser::make_CONCENTRATIONS_T(loc); }
 }
 <concentrations_t>{
-{float12}       i++; macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+{float12}       i++; if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(atof(yytext),loc);
 "\n"            if(i >= nums[1]) { i = 0; BEGIN(temperature); return macsin::macsin_parser::make_TEMPERATURE(loc); }
 }
 <temperature>{
-{float12}       macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+{float12}       if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(atof(yytext),loc);
 "\n"            i = 0; BEGIN(groups); return macsin::macsin_parser::make_GROUPS(loc);
 }
 <groups>{
-{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+{int3}          if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 "\n"            if(++i == nums[0]) { i = 0; BEGIN(material); return macsin::macsin_parser::make_MATERIAL(loc); }
 }
-<<EOF>>             yyterminate(); return 0;
+<<EOF>>         return macsin::macsin_parser::make_END(loc);
 <*>[ \t\r\n]
-<*>.                return macsin::macsin_parser::make_BAD(loc);
+%<*>.                return macsin::macsin_parser::make_BAD(loc);
 %%
 void
 macsin_controller::scan_begin ()

@@ -10,7 +10,6 @@
 {
 #include <string>
 class macsin_controller;
-int d = 1;
 }
 // The parsing context.
 %param { macsin_controller& controller }
@@ -25,6 +24,7 @@ int d = 1;
 %code
 {
 #include "macsin_controller.h"
+int d = 1;
 }
 %define api.token.prefix {TOK_}
 %token
@@ -47,6 +47,7 @@ int d = 1;
     TEMPERATURE
     GROUPS
     BAD
+    END 0
 ;
 %type <int> NUM, NUM5
 %type <float> FLOAT
@@ -56,6 +57,7 @@ int d = 1;
 records: /* */
          | records record
          | records error record
+         | records END
          ;
 record: record1
         | record2
