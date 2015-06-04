@@ -6,6 +6,7 @@
 #include "macsin_controller.h"
 #include "macsin_parser.tab.hh"
 
+extern int d;
 // Work around an incompatibility in flex (at least versions
 // 2.5.31 through 2.5.33): it generates code that does
 // not conform to C89. See Debian bug 333231
@@ -18,9 +19,14 @@ static macsin::location loc;
 %}
 %option noyywrap nounput batch debug noinput
 %option outfile="lex.macsin.cc"
-id    [a-zA-Z][a-zA-Z_0-9]*
-int   [0-9]+
-blank [ \t]
+
+int3    [[:digit:]]{1,3}
+int5    [[:digit:]]{3,5}
+float12 -?[[:digit:]]"."[[:digit:]]{5}[eE][+-][[:digit:]]{2}
+comment	[[:space:]][^{int3}{int5}{float12}]+$
+blank   [ \t]
+
+%x row1 row2 row3 row4 row5 materials material comment isotopes concentrations models isotopes_t concentrations_t temperature groups
 %{
     // Code run each time a pattern is matched.
     #define YY_USER_ACTION loc.columns (yyleng);
@@ -30,25 +36,66 @@ blank [ \t]
     // Code run each time yylex is called.
     loc.step ();
 %}
-{blank}+    loc.step ();
-[\n]+       loc.lines (yyleng); loc.step ();
-"-"     return macsin::macsin_parser::make_MINUS(loc);
-"+"     return macsin::macsin_parser::make_PLUS(loc);
-"*"     return macsin::macsin_parser::make_STAR(loc);
-"/"     return macsin::macsin_parser::make_SLASH(loc);
-"("     return macsin::macsin_parser::make_LPAREN(loc);
-")"     return macsin::macsin_parser::make_RPAREN(loc);
-":="    return macsin::macsin_parser::make_ASSIGN(loc);
-{int}   {
-    errno = 0;
-    long n = strtol (yytext, NULL, 10);
-    if (! (INT_MIN <= n && n <= INT_MAX && errno != ERANGE))
-        controller.error (loc, "integer is out of range");
-    return macsin::macsin_parser::make_NUMBER(n, loc);
+    static int i = 0;
+    int j = 0;
+    static int nums[2];
+{blank}         loc.step (); BEGIN(row1); return macsin::macsin_parser::make_RECORD1(loc);
+<row1>{
+{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+"\n"            BEGIN(row2); return macsin::macsin_parser::make_RECORD2(loc);
 }
-{id}    return macsin::macsin_parser::make_IDENTIFIER(yytext, loc);
-.       controller.error (loc, "invalid character");
-<<EOF>> return macsin::macsin_parser::make_END(loc);
+<row2>{
+{float12}       macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+"\n"            BEGIN(row3); return macsin::macsin_parser::make_RECORD3(loc);
+}
+<row3>{
+{float12}       macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+"\n"            BEGIN(row4); return macsin::macsin_parser::make_RECORD4(loc);
+}
+<row4>{
+{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+"\n"            BEGIN(row5); return macsin::macsin_parser::make_RECORD5(loc);
+}
+<row5>{
+{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+"\n"            BEGIN(materials); return macsin::macsin_parser::make_MATERIALS(loc);
+}
+<materials>{blank}    BEGIN(material); return macsin::macsin_parser::make_MATERIAL(loc);
+<material>{
+{int3}          macsinlval = nums[i] = atoi(yytext); if (d) printf("NUM "); if(++i == 2) BEGIN(comment); return macsin::macsin_parser::make_NUM(loc);
+}
+<comment>.*"\n"     i = 0; BEGIN(isotopes); return macsin::macsin_parser::make_ISOTOPES(loc);
+<isotopes>{
+{int5}          i++; macsinlval = atoi(yytext); if (d) printf("NUM5 "); return macsin::macsin_parser::make_NUM5(loc);
+"\n"            if(i >= nums[0]) { i = 0; BEGIN(concentrations); return macsin::macsin_parser::make_CONCENTRATIONS(loc); }
+}
+<concentrations>{
+{float12}       i++; macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+"\n"            if(i >= nums[0]) { i = 0; BEGIN(models); return macsin::macsin_parser::make_MODELS(loc); }
+}
+<models>{
+{int3}          i++; macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+"\n"            if(i >= nums[0]) { i = 0; if(nums[1]) { BEGIN(isotopes_t); return macsin::macsin_parser::make_ISOTOPES_T(loc); } else { BEGIN(temperature); return macsin::macsin_parser::make_TEMPERATURE(loc); } }
+}
+<isotopes_t>{
+{int5}          i++; macsinlval = atoi(yytext); if (d) printf("NUM5 "); return macsin::macsin_parser::make_NUM5(loc);
+"\n"            if(i >= nums[1]) { i = 0; BEGIN(concentrations_t); return macsin::macsin_parser::make_CONCENTRATIONS_T(loc); }
+}
+<concentrations_t>{
+{float12}       i++; macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+"\n"            if(i >= nums[1]) { i = 0; BEGIN(temperature); return macsin::macsin_parser::make_TEMPERATURE(loc); }
+}
+<temperature>{
+{float12}       macsinlval = atof(yytext); if (d) printf("FLOAT "); return macsin::macsin_parser::make_FLOAT(loc);
+"\n"            i = 0; BEGIN(groups); return macsin::macsin_parser::make_GROUPS(loc);
+}
+<groups>{
+{int3}          macsinlval = atoi(yytext); if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(loc);
+"\n"            if(++i == nums[0]) { i = 0; BEGIN(material); return macsin::macsin_parser::make_MATERIAL(loc); }
+}
+<<EOF>>             yyterminate(); return 0;
+<*>[ \t\r\n]
+<*>.                return macsin::macsin_parser::make_BAD(loc);
 %%
 void
 macsin_controller::scan_begin ()
