@@ -61,6 +61,7 @@ macsin_controller::scan_begin ()
             error ("cannot open " + file + ": " + strerror(errno));
             exit (EXIT_FAILURE);
         }
+    yyout = stdout;
 }
 
 void
