@@ -24,7 +24,7 @@ class macsin_controller;
 %code
 {
 #include "macsin_controller.h"
-int d = 1;
+int d = 0;
 }
 %define api.token.prefix {TOK_}
 %token

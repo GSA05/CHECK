@@ -39,7 +39,7 @@ blank   [ \t]
     static int i = 0;
     static int nums[2];
 {blank}         loc.step (); BEGIN(row1); return macsin::macsin_parser::make_RECORD1(loc);
-<row1>{
+<row1,row2>{
 {int3}          if (d) printf("NUM "); return macsin::macsin_parser::make_NUM(atoi(yytext),loc);
 "\n"            BEGIN(row2); return macsin::macsin_parser::make_RECORD2(loc);
 }
@@ -107,7 +107,6 @@ macsin_controller::scan_begin ()
             error ("cannot open " + file + ": " + strerror(errno));
             exit (EXIT_FAILURE);
         }
-    yyout = stdout;
 }
 
 void
